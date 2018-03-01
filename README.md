@@ -10,14 +10,14 @@ Library to convert keys of JWK format to more popular formats such as PEM.
 
 
 Since this library uses OpenSSL under the covers, it requires explicitly passing build and linker paths to the OpenSSL library. Additionally, `swift package generate-xcodeproj` doesn't add the proper flags when they are passed in using the flags, therefore they must be added to the generated xcode project.
-
 ```
 swift build -Xlinker -L/usr/local/opt/openssl/lib -Xcc -I/usr/local/opt/openssl/include
 ```
-#### To build in Xcode:
-swift package generate-xcodeproj
-
-Go to targets -> build settings -> search for user paths add to Header Search Paths `/usr/local/opt/openssl/include` add to Library Search Paths `/usr/local/opt/openssl/lib`
+#### To generate Xcode project:
+```
+swift package generate-xcodeproj --xcconfig-overrides openssl.xcconfig
+```
+The extra xcconfig are needed to be able to build in Xcode or use `xcodebuild`.
 
 ✨ Build magic ✨
 
