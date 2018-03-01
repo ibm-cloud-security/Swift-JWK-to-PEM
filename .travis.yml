@@ -1,0 +1,47 @@
+os:
+  - linux
+  - osx
+language: generic
+env:
+  global:
+  - SWIFT_VERSION=4.0.3
+
+sudo: required
+dist: trusty
+osx_image: xcode9.2
+
+branches:
+  only:
+  - master
+  - development
+  - /\d+\.\d+\.\d+/
+
+notifications:
+  email:
+    on_success: always
+    on_failure: always
+
+install:
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+      eval "$(cat ./install-swiftenv.sh)";
+      sudo apt-get install -y libcurl4-openssl-dev libblocksruntime-dev libkqueue-dev libpthread-workqueue-dev libbsd-dev;
+      sudo rm /usr/bin/ld && sudo ln -s /usr/bin/ld.gold /usr/bin/ld;
+    fi
+  - git --version
+
+script:
+  - swift package clean # clean built artifacts if present
+  - swift package fetch # clones all dependencies
+  - swift build # build project
+  - swift test #run tests
+
+after_success:
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+      gem install slather;
+      swift package generate-xcodeproj --xcconfig-overrides openssl.xcconfig;
+      slather setup Swift-JWT-to-PEM.xcodeproj;
+      xcodebuild -project Swift-JWT-to-PEM.xcodeproj -scheme Swift-JWT-to-PEM-Package build;
+      xcodebuild -project Swift-JWT-to-PEM.xcodeproj -scheme Swift-JWT-to-PEM-Package -enableCodeCoverage YES test;
+      slather coverage --coveralls --binary-basename Swift-JWT-to-PEM.framework -v;
+    fi
+
