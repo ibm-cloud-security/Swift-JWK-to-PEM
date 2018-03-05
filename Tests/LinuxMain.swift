@@ -1,6 +1,6 @@
 import XCTest
-@testable import Swift_JWT_to_PEMTests
+@testable import SwiftJWKtoPEMTests
 
 XCTMain([
-    testCase(Swift_JWT_to_PEMTests.allTests),
+    testCase(SwiftJWKtoPEMTests.allTests),
 ])

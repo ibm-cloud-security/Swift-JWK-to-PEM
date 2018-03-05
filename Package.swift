@@ -14,22 +14,22 @@ var dependencies: [Package.Dependency] = [
 #endif
 
 let package = Package(
-    name: "Swift-JWT-to-PEM",
+    name: "SwiftJWKtoPEM",
     products: [
         // Products define the executables and libraries produced by a package, and make them visible to other packages.
         .library(
-            name: "Swift-JWT-to-PEM",
-            targets: ["Swift-JWT-to-PEM"]),
+            name: "SwiftJWKtoPEM",
+            targets: ["SwiftJWKtoPEM"]),
     ],
     dependencies: dependencies,
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
         // Targets can depend on other targets in this package, and on products in packages which this package depends on.
         .target(
-            name: "Swift-JWT-to-PEM",
+            name: "SwiftJWKtoPEM",
             dependencies: []),
         .testTarget(
-            name: "Swift-JWT-to-PEMTests",
-            dependencies: ["Swift-JWT-to-PEM"]),
+            name: "SwiftJWKtoPEMTests",
+            dependencies: ["SwiftJWKtoPEM"]),
     ]
 )

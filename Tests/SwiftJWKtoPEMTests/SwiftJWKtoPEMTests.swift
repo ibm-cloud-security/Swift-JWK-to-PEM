@@ -12,9 +12,9 @@
  */
 
 import XCTest
-@testable import Swift_JWT_to_PEM
+@testable import SwiftJWKtoPEM
 
-class Swift_JWT_to_PEMTests: XCTestCase {
+class SwiftJWKtoPEMTests: XCTestCase {
     
     func testJWKtoPEM_OpenSSLGenerated() {
         let token = """
@@ -150,7 +150,7 @@ lU7tI2NCoSxFONjF+kGxO2S8mbBzADTBXaAE7clHorp6nRj8rIxHzD0V3+W8mp2W
             let publicPem = try k.getPublicKey(certEncoding.pemPkcs8)
             XCTAssertNotNil(publicPem)
             print("\n\npublicPemPKCS1: \n", publicPem ?? "nil")
-            //            XCTAssertEqual(publicPem, expectedPublicKey, "Does not match expected public key")
+//            XCTAssertEqual(publicPem, expectedPublicKey, "Does not match expected public key")
             
         } catch {
             XCTFail()

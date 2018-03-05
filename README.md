@@ -26,6 +26,8 @@ The extra xcconfig are needed to be able to build in Xcode or use `xcodebuild`.
 
 ### TL;DR
 ```
+import SwiftJWKtoPEM
+
 let key = try RSAKey(jwk: token)
 
 let publicPem = try key.getPublicKey()
