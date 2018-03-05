@@ -32,8 +32,8 @@ install:
 script:
   - swift package clean # clean built artifacts if present
   - swift package fetch # clones all dependencies
-  - swift build # build project
-  - swift test #run tests
+  - swift build -Xlinker -L/usr/local/opt/openssl/lib -Xcc -I/usr/local/opt/openssl/include # build project
+  - swift test -Xlinker -L/usr/local/opt/openssl/lib -Xcc -I/usr/local/opt/openssl/include #run tests
 
 after_success:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
