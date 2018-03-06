@@ -32,16 +32,18 @@ install:
 script:
   - swift package clean # clean built artifacts if present
   - swift package fetch # clones all dependencies
-  - swift build -Xlinker -L/usr/local/opt/openssl/lib -Xcc -I/usr/local/opt/openssl/include # build project
-  - swift test -Xlinker -L/usr/local/opt/openssl/lib -Xcc -I/usr/local/opt/openssl/include #run tests
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then swift build; fi # build project
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then swift test; fi #run tests
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then swift build -Xlinker -L/usr/local/opt/openssl/lib -Xcc -I/usr/local/opt/openssl/include; fi # build project
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then swift test -Xlinker -L/usr/local/opt/openssl/lib -Xcc -I/usr/local/opt/openssl/include; fi #run tests
 
 after_success:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
       gem install slather;
       swift package generate-xcodeproj --xcconfig-overrides openssl.xcconfig;
       slather setup Swift-JWT-to-PEM.xcodeproj;
-      xcodebuild -project Swift-JWT-to-PEM.xcodeproj -scheme Swift-JWT-to-PEM-Package build;
-      xcodebuild -project Swift-JWT-to-PEM.xcodeproj -scheme Swift-JWT-to-PEM-Package -enableCodeCoverage YES test;
+      xcodebuild -project SwiftJWKtoPEM.xcodeproj -scheme SwiftJWKtoPEM-Package  build;
+      xcodebuild -project SwiftJWKtoPEM.xcodeproj -scheme SwiftJWKtoPEM-Package -enableCodeCoverage YES test;
       slather coverage --coveralls --binary-basename Swift-JWT-to-PEM.framework -v;
     fi
 
