@@ -9,7 +9,7 @@ var dependencies: [Package.Dependency] = [
 ]
 #else
 var dependencies: [Package.Dependency] = [
-    .package(url: "https://github.com/IBM-Swift/OpenSSL-OSX.git", from: "0.0.0")
+    .package(url: "https://github.com/IBM-Swift/OpenSSL-OSX.git", from: "0.4.0")
 ]
 #endif
 
