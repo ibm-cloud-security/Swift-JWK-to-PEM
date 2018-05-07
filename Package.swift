@@ -5,7 +5,7 @@ import PackageDescription
 
 #if os(Linux)
 var dependencies: [Package.Dependency] = [
-    .package(url: "https://github.com/IBM-Swift/OpenSSL.git", from: "0.0.0")
+    .package(url: "https://github.com/IBM-Swift/OpenSSL.git", from: "1.0.0")
 ]
 #else
 var dependencies: [Package.Dependency] = [
