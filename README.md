@@ -1,6 +1,6 @@
-# Swift-JWT-to-PEM
+# Swift-JWK-to-PEM
 
-Library to convert keys of JWK format to more popular formats such as PEM.
+Library to convert RSA keys in JWK/JWKS format to more popular formats such as PEM.
 
 **Right now only supports RSA and outputs PEM PKCS#8 format.**
 
