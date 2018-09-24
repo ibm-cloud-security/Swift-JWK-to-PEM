@@ -6,22 +6,6 @@ Library to convert RSA keys in JWK/JWKS format to more popular formats such as P
 
 **Tested in Sierra only**
 
-## Build Instructions
-
-
-Since this library uses OpenSSL under the covers, it requires explicitly passing build and linker paths to the OpenSSL library. Additionally, `swift package generate-xcodeproj` doesn't add the proper flags when they are passed in using the flags, therefore they must be added to the generated xcode project.
-```
-swift build -Xlinker -L/usr/local/opt/openssl/lib -Xcc -I/usr/local/opt/openssl/include
-```
-#### To generate Xcode project:
-```
-swift package generate-xcodeproj --xcconfig-overrides openssl.xcconfig
-```
-The extra xcconfig are needed to be able to build in Xcode or use `xcodebuild`.
-
-✨ Build magic ✨
-
-
 ## Usage
 
 ### TL;DR
