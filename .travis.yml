@@ -1,47 +1,50 @@
-os:
-  - linux
-  - osx
-language: generic
-env:
-  global:
-  - SWIFT_VERSION=4.0.3
+# Travis CI build file for Kitura sample app.
+# Kitura runs on OS X and Linux (Ubuntu).
+# See the following URLs for further details on Travis CI
+# https://docs.travis-ci.com/user/customizing-the-build/
+# https://docs.travis-ci.com/user/docker/
+# https://docs.travis-ci.com/user/multi-os/
 
-sudo: required
-dist: trusty
-osx_image: xcode9.2
-
+# whitelist (branches that should be built)
 branches:
   only:
-  - master
-  - development
-  - /\d+\.\d+\.\d+/
+    - master
+    - development
+    - /\d+\.\d+\.\d+/
 
 notifications:
   email:
     on_success: always
     on_failure: always
 
-install:
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-      eval "$(cat ./install-swiftenv.sh)";
-      sudo apt-get install -y libcurl4-openssl-dev libblocksruntime-dev libkqueue-dev libpthread-workqueue-dev libbsd-dev;
-      sudo rm /usr/bin/ld && sudo ln -s /usr/bin/ld.gold /usr/bin/ld;
-    fi
-  - git --version
+matrix:
+  include:
+    - os: linux
+      dist: trusty
+      sudo: required
+      env: SWIFT_SNAPSHOT=4.0.3
+    - os: linux
+      dist: trusty
+      sudo: required
+      env: SWIFT_SNAPSHOT=4.1
+    - os: linux
+      dist: trusty
+      sudo: required
+    - os: osx
+      osx_image: xcode9.2
+      sudo: required
+      env: SWIFT_SNAPSHOT=4.0.3
+    - os: osx
+      osx_image: xcode9.4
+      sudo: required
+      env: SWIFT_SNAPSHOT=4.1.2 JAZZY_ELIGIBLE=true
+    - os: osx
+      osx_image: xcode10
+      sudo: required
+
+before_install:
+  - git clone https://github.com/IBM-Swift/Package-Builder.git
 
 script:
-  - swift package clean # clean built artifacts if present
-  - swift package fetch # clones all dependencies
-  - swift build # build project
-  - swift test #run tests
-
-after_success:
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
-      gem install slather;
-      swift package generate-xcodeproj;
-      slather setup Swift-JWT-to-PEM.xcodeproj;
-      xcodebuild -project SwiftJWKtoPEM.xcodeproj -scheme SwiftJWKtoPEM-Package  build;
-      xcodebuild -project SwiftJWKtoPEM.xcodeproj -scheme SwiftJWKtoPEM-Package -enableCodeCoverage YES test;
-      slather coverage --coveralls --binary-basename Swift-JWT-to-PEM.framework -v;
-    fi
+- ./Package-Builder/build-package.sh -projectDir $TRAVIS_BUILD_DIR
 

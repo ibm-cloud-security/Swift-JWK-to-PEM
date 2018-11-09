@@ -1,4 +1,4 @@
-// swift-tools-version:4.2
+// swift-tools-version:4.0
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -7,7 +7,7 @@ var dependencies: [Package.Dependency] = []
 var targetDependencies: [Target.Dependency] = []
 
 #if os(Linux)
-dependencies.append(.package(url: "https://github.com/IBM-Swift/OpenSSL.git", from: "2.0.0"))
+dependencies.append(.package(url: "https://github.com/IBM-Swift/OpenSSL.git", from: "1.0.0"))
 targetDependencies.append(.byName(name: "OpenSSL"))
 #else
 dependencies.append(.package(url: "https://github.com/IBM-Swift/OpenSSL-OSX.git", from: "0.5.0"))
