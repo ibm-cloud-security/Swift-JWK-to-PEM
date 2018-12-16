@@ -13,7 +13,7 @@ limitations under the License.
 
 import Foundation
 
-public extension String {
+extension String {
     
     public func base64URLDecode() -> Data? {
         var str = self
